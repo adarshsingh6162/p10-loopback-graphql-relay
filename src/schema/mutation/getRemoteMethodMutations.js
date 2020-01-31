@@ -94,8 +94,7 @@ module.exports = function getRemoteMethodMutations(model) {
             const xOrgId = req.headers["x-org-id"];
             const findOrgIdFromDomain = context.findOrgIdFromDomain;
             const organizationCache = context.organizationCache;
-            if (model.modelName === "Organization") {
-              if (args.id && args.id === "this") {
+            if (model.modelName === "Organization" && args.id && args.id === "this") {
                 if (xOrgId) {
                   return organizationCache.find(xOrgId)
                     .then(orgId => setOrgIdIn('args', orgId))
@@ -122,7 +121,6 @@ module.exports = function getRemoteMethodMutations(model) {
                 } else {
                   throw new Error("No x-org-id or domain (x-forwarded-host) found for resolution of Organiation id.")
                 }
-              }
             } else {
               if (xOrgId) {
                 return organizationCache.find(xOrgId)
